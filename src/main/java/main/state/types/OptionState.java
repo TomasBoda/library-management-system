@@ -5,10 +5,16 @@ import main.utils.Console;
 
 public abstract class OptionState extends State {
 
-    public OptionState(String command, String message) { super(command, message); }
+    public OptionState(String command, String message) {
+        super(command, message);
+    }
 
-    public OptionState(String command, String message, State callback) { super(command, message, callback); }
-    public OptionState(String command, String message, State[] children) { super(command, message, children); }
+    public OptionState(String command, String message, State callback) {
+        super(command, message, callback);
+    }
+    public OptionState(String command, String message, State[] children) {
+        super(command, message, children);
+    }
 
     @Override
     public State next(String command) {

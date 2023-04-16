@@ -13,11 +13,17 @@ public class Api {
 
     private Connection connection;
 
-    public Api() { connect(); }
+    public Api() {
+        connect();
+    }
 
-    public Users users() { return new Users(connection); }
+    public Users users() {
+        return new Users(connection);
+    }
 
-    public Books books() { return new Books(connection); }
+    public Books books() {
+        return new Books(connection);
+    }
 
     private void connect() {
         try {

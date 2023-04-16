@@ -18,11 +18,17 @@ public class StateManager {
 
     private State state;
 
-    public StateManager() { this.state = build(); }
+    public StateManager() {
+        this.state = build();
+    }
 
-    public State getState() { return state; }
+    public State getState() {
+        return state;
+    }
 
-    public void setState(State state) { this.state = state; }
+    public void setState(State state) {
+        this.state = state;
+    }
 
     private State build() {
         State home = new Home("home", "What do you want to do");

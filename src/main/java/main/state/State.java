@@ -47,16 +47,28 @@ public abstract class State {
 
     public abstract void ask();
 
-    public String getCommand() { return command; }
+    public String getCommand() {
+        return command;
+    }
 
-    public String getMessage() { return message; }
+    public String getMessage() {
+        return message;
+    }
 
-    public void setChildren(State... states) { children = states; }
-    public State[] getChildren() { return children; }
+    public void setChildren(State... states) {
+        children = states;
+    }
+    public State[] getChildren() {
+        return children;
+    }
 
-    public State getCallback() { return callback; }
+    public State getCallback() {
+        return callback;
+    }
 
-    public void setCallback(State state) { callback = state; }
+    public void setCallback(State state) {
+        callback = state;
+    }
 
     public String getBreadcrumbs() {
         String breadcrumbs = "";

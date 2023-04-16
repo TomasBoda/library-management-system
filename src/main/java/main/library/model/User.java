@@ -17,9 +17,15 @@ public class User {
         this.email = email;
     }
 
-    public int getId() { return id; }
+    public int getId() {
+        return id;
+    }
 
-    public String getName() { return name; }
+    public String getName() {
+        return name;
+    }
 
-    public String getEmail() { return email; }
+    public String getEmail() {
+        return email;
+    }
 }

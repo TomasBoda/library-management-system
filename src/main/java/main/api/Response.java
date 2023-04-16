@@ -17,9 +17,15 @@ public class Response<T> {
         this.data = data;
     }
 
-    public int getStatus() { return status; }
+    public int getStatus() {
+        return status;
+    }
 
-    public String getMessage() { return message; }
+    public String getMessage() {
+        return message;
+    }
 
-    public T getData() { return data; }
+    public T getData() {
+        return data;
+    }
 }

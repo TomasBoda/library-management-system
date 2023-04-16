@@ -12,7 +12,9 @@ public class Users {
 
     private Connection connection;
 
-    public Users(Connection connection) { this.connection = connection; }
+    public Users(Connection connection) {
+        this.connection = connection;
+    }
 
     public Response add(User user) {
         String query = "INSERT INTO users (name, email) VALUES (?, ?)";

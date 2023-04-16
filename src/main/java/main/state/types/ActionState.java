@@ -9,11 +9,17 @@ public abstract class ActionState extends State {
     private int currentStateIndex = 0;
     private String[] values;
 
-    public ActionState(String command, String message) { super(command, message); }
+    public ActionState(String command, String message) {
+        super(command, message);
+    }
 
-    public ActionState(String command, String message, State callback) { super(command, message, callback); }
+    public ActionState(String command, String message, State callback) {
+        super(command, message, callback);
+    }
 
-    public ActionState(String command, String message, State[] children) { super(command, message, children); }
+    public ActionState(String command, String message, State[] children) {
+        super(command, message, children);
+    }
 
     public abstract void execute();
 

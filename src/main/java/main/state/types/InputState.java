@@ -6,11 +6,17 @@ import main.utils.Console;
 
 public abstract class InputState extends State {
 
-    public InputState(String command, String message) { super(command, message); }
+    public InputState(String command, String message) {
+        super(command, message);
+    }
 
-    public InputState(String command, String message, State callback) { super(command, message, callback); }
+    public InputState(String command, String message, State callback) {
+        super(command, message, callback);
+    }
 
-    public InputState(String command, String message, State[] children) { super(command, message, children); }
+    public InputState(String command, String message, State[] children) {
+        super(command, message, children);
+    }
 
     @Override
     public State next(String command) {

@@ -14,7 +14,9 @@ public class Books {
 
     private Connection connection;
 
-    public Books(Connection connection) { this.connection = connection; }
+    public Books(Connection connection) {
+        this.connection = connection;
+    }
 
     public Response add(Book book) {
         String query = "INSERT INTO books (title, description, author) VALUES (?, ?, ?)";
