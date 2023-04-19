@@ -2,10 +2,12 @@ package main.app;
 
 import main.api.Api;
 import main.api.Response;
+import main.command.Command;
 import main.library.model.User;
 import main.state.State;
 import main.state.StateManager;
 import main.utils.Console;
+import main.utils.Converter;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -15,8 +17,9 @@ import java.util.Scanner;
 
 public class App {
 
-    public static Api api = new Api();
-    public static StateManager manager = new StateManager();
+    public static final Api api = new Api();
+    public static final StateManager manager = new StateManager();
+    public static final Command[] commands = initCommands();
 
     public void start() {
         Console.println("Welcome to the Library Management System " + Configuration.VERSION);
@@ -81,6 +84,14 @@ public class App {
 
     private void mockLogin() {
         Configuration.user = new User("8c480d9fbf6f6be770f08537c601f98f", "Tomas Boda", "tomasboda@email.com", "2f21e282e693bfcdfaf97fb5e26d857f", 1);
+    }
+
+    private static Command[] initCommands() {
+        return new Command[] {
+                new Command("back", state -> state.getCallback() == null ? state : state.getCallback()),
+                new Command("home", state -> App.manager.getRootState()),
+                new Command("exit", state -> { Console.println("Exiting the application"); App.exit(); return null; })
+        };
     }
 
     public static void exit() {

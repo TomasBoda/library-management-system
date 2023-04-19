@@ -2,6 +2,8 @@ package main.state;
 
 import main.app.App;
 import main.app.Configuration;
+import main.command.Command;
+
 public abstract class State {
 
     private String command;
@@ -22,8 +24,10 @@ public abstract class State {
     }
 
     public State process(String command) {
-        if (command.equals(":back")) {
-            return getCallback() == null ? this : getCallback();
+        for (Command cmd : App.commands) {
+            if (cmd.getCommand().equals(command)) {
+                return cmd.getAction().getState(this);
+            }
         }
 
         return next(command);

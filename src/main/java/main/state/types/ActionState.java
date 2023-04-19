@@ -46,11 +46,6 @@ public abstract class ActionState extends State {
         return getChildren()[currentStateIndex++];
     }
 
-    public State sameChild(String command) {
-        values[currentStateIndex] = command;
-        return getChildren()[currentStateIndex - 1];
-    }
-
     @Override
     public void ask() {
         Console.println(getBreadcrumbs());

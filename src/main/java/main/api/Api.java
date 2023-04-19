@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 import main.api.routes.Authentification;
 import main.api.routes.Books;
+import main.api.routes.Orders;
 import main.api.routes.Users;
 import main.app.App;
 import main.app.Configuration;
@@ -25,6 +26,10 @@ public class Api {
 
     public Books books() {
         return new Books(connection);
+    }
+
+    public Orders orders() {
+        return new Orders(connection);
     }
 
     public Authentification auth() {
