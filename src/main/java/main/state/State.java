@@ -1,5 +1,6 @@
 package main.state;
 
+import main.app.App;
 import main.app.Configuration;
 public abstract class State {
 

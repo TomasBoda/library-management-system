@@ -64,6 +64,23 @@ public class Books {
         }
     }
 
+    public Response delete(String bookTitle) {
+        String query = "DELETE FROM books WHERE title = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, bookTitle);
+            int rowsAffected = statement.executeUpdate();
+
+            if (rowsAffected == 0) {
+                return new Response(500, "Book couldn't be deleted");
+            }
+
+            return new Response(200, "Book successfully deleted");
+        } catch (SQLException e) {
+            return new Response(500, "MySQL Error");
+        }
+    }
+
     public Response<Book> getByTitle(String bookTitle) {
         String query = "SELECT * FROM books WHERE title = ?";
 

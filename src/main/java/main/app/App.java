@@ -15,19 +15,15 @@ import java.util.Scanner;
 
 public class App {
 
-    public static Api api;
-    public static StateManager manager;
-
-    public App() {
-        api = new Api();
-        manager = new StateManager();
-    }
+    public static Api api = new Api();
+    public static StateManager manager = new StateManager();
 
     public void start() {
-        Console.println("Welcome to the Library Management System v" + Configuration.VERSION);
+        Console.println("Welcome to the Library Management System " + Configuration.VERSION);
 
         mockLogin();
-        authenticate();
+        login();
+        manager.build();
 
         manager.getState().ask();
         CommandExecutor executor = (line) -> {
@@ -58,10 +54,10 @@ public class App {
         }
     }
 
-    private void authenticate() {
+    private void login() {
         Scanner scanner = new Scanner(System.in);
 
-        while (Configuration.user == null) {
+        while (!logged()) {
             Console.println("Please login to continue");
             Console.print("Enter email: ");
             String email = scanner.nextLine();
@@ -77,6 +73,10 @@ public class App {
                 Console.println("User credentials are incorrect, please try again");
             }
         }
+    }
+
+    public static boolean logged() {
+        return Configuration.user != null;
     }
 
     private void mockLogin() {

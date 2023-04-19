@@ -1,9 +1,12 @@
 package main.state;
 
+import main.app.Configuration;
 import main.state.nodes.add.Add;
 import main.state.nodes.add.book.*;
 import main.state.nodes.add.user.*;
 import main.state.nodes.delete.Delete;
+import main.state.nodes.delete.book.DeleteBook;
+import main.state.nodes.delete.book.DeleteBookCheckTitle;
 import main.state.nodes.delete.user.DeleteUser;
 import main.state.nodes.delete.user.DeleteUserCheckEmail;
 import main.state.nodes.edit.Edit;
@@ -18,10 +21,6 @@ public class StateManager {
 
     private State state;
 
-    public StateManager() {
-        this.state = buildAdminStates();
-    }
-
     public State getState() {
         return state;
     }
@@ -33,6 +32,18 @@ public class StateManager {
     public void goBack() {
         setState(getState().getCallback());
         getState().ask();
+    }
+
+    public void build() {
+        if (Configuration.user.getAdmin() == 0) {
+            state = buildStudentStates();
+        } else {
+            state = buildAdminStates();
+        }
+    }
+
+    private State buildStudentStates() {
+        return null;
     }
 
     private State buildAdminStates() {
@@ -73,6 +84,9 @@ public class StateManager {
         State deleteUser = new DeleteUser("user", "You are about to delete a user, type anything to continue", delete);
         State deleteUserCheckEmail = new DeleteUserCheckEmail("check-email", "Enter the user's e-mail", deleteUser);
 
+        State deleteBook = new DeleteBook("book", "You are about to delete a book, type anything to continue", delete);
+        State deleteBookCheckTitle = new DeleteBookCheckTitle("check-title", "Enter the book's title", deleteBook);
+
         State list = new List("list", "What do you want to list", home);
 
         State listUser = new ListUser("user", "You are about to list users, type anything to continue", list);
@@ -88,7 +102,8 @@ public class StateManager {
         edit.setChildren(editUser, editBook);
 
         deleteUser.setChildren(deleteUserCheckEmail);
-        delete.setChildren(deleteUser);
+        deleteBook.setChildren(deleteBookCheckTitle);
+        delete.setChildren(deleteUser, deleteBook);
 
         list.setChildren(listUser, listBook);
 
