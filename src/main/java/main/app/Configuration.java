@@ -1,7 +1,5 @@
 package main.app;
 
-import main.library.model.User;
-
 public class Configuration {
 
     public static String userId;

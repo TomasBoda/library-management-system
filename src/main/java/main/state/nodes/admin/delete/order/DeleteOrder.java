@@ -2,7 +2,7 @@ package main.state.nodes.admin.delete.order;
 
 import main.api.Response;
 import main.app.App;
-import main.library.model.Order;
+import main.model.Order;
 import main.state.State;
 import main.state.types.ActionState;
 import main.utils.Console;

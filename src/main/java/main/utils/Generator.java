@@ -1,7 +1,5 @@
 package main.utils;
 
-import main.app.App;
-
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -14,10 +12,10 @@ public class Generator {
             md.update(input.getBytes());
             byte[] digest = md.digest();
 
-            StringBuilder builer = new StringBuilder();
-            for (byte b : digest) builer.append(String.format("%02x", b & 0xff));
+            StringBuilder builder = new StringBuilder();
+            for (byte b : digest) builder.append(String.format("%02x", b & 0xff));
 
-            return builer.toString();
+            return builder.toString();
         } catch (NoSuchAlgorithmException e) {
             Console.error("Error generating a hash");
             return null;

@@ -2,7 +2,7 @@ package main.state.nodes.admin.delete.user;
 
 import main.api.Response;
 import main.app.App;
-import main.library.model.User;
+import main.model.User;
 import main.state.State;
 import main.state.types.ActionState;
 import main.state.types.InputState;

@@ -1,7 +1,5 @@
 package main.command;
 
-import main.state.State;
-
 public class Command {
 
     private String command;

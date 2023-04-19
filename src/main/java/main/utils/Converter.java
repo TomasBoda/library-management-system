@@ -12,7 +12,7 @@ public class Converter {
 
         int day = 1;
         int month = 1;
-        int year = 1970;
+        int year = 1;
 
         try {
             day = Integer.parseInt(parts[0]);

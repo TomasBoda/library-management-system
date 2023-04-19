@@ -2,9 +2,9 @@ package main.state.nodes.admin.delete.order;
 
 import main.api.Response;
 import main.app.App;
-import main.library.model.Book;
-import main.library.model.Order;
-import main.library.model.User;
+import main.model.Book;
+import main.model.Order;
+import main.model.User;
 import main.state.State;
 import main.state.types.ActionState;
 import main.state.types.InputState;

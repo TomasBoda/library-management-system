@@ -2,7 +2,7 @@ package main.state.nodes.admin.add.user;
 
 import main.app.App;
 import main.api.Response;
-import main.library.model.User;
+import main.model.User;
 import main.state.State;
 import main.state.types.ActionState;
 import main.utils.Console;

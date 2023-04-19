@@ -2,9 +2,7 @@ package main.api.routes;
 
 import main.api.Response;
 import main.app.Configuration;
-import main.library.model.Book;
-import main.library.model.Order;
-import main.library.model.User;
+import main.model.User;
 import main.state.nodes.student.model.OrderResult;
 import main.utils.Generator;
 

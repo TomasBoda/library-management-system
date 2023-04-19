@@ -1,7 +1,7 @@
 package main.api.routes;
 
 import main.api.Response;
-import main.library.model.User;
+import main.model.User;
 import main.utils.Generator;
 
 import java.sql.*;

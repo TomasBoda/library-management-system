@@ -2,7 +2,7 @@ package main.state.nodes.admin.add.book;
 
 import main.app.App;
 import main.api.Response;
-import main.library.model.Book;
+import main.model.Book;
 import main.state.State;
 import main.state.types.ActionState;
 import main.utils.Console;

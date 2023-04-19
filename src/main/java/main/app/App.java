@@ -3,19 +3,21 @@ package main.app;
 import main.api.Api;
 import main.api.Response;
 import main.command.Command;
-import main.library.model.User;
+import main.model.User;
 import main.state.State;
 import main.state.StateManager;
 import main.utils.Console;
-import main.utils.Converter;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Scanner;
 
 public class App {
+
+    private interface CommandExecutor {
+        void execute(String command);
+    }
 
     public static final Api api = new Api();
     public static final StateManager manager = new StateManager();
@@ -47,9 +49,6 @@ public class App {
             }
 
             reader.close();
-        } catch (FileNotFoundException e) {
-            Console.error("Cannot read input, exiting...");
-            App.exit();
         } catch (IOException e) {
             Console.error("Cannot read input, exiting...");
             App.exit();
