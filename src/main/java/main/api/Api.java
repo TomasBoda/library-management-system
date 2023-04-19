@@ -1,6 +1,7 @@
 package main.api;
 
 import java.sql.*;
+import java.util.Scanner;
 
 import main.api.routes.Authentification;
 import main.api.routes.Books;
@@ -31,6 +32,13 @@ public class Api {
     }
 
     private void connect() {
+        if (Configuration.DATABASE_PASSWORD.equals("")) {
+            Scanner scanner = new Scanner(System.in);
+            System.out.print("Enter database password: ");
+            String password = scanner.nextLine();
+            Configuration.DATABASE_PASSWORD = password;
+        }
+
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection(Configuration.DATABASE_URL, Configuration.DATABASE_USERNAME, Configuration.DATABASE_PASSWORD);
