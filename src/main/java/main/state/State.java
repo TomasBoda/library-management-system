@@ -1,8 +1,10 @@
 package main.state;
 
+import main.api.Response;
 import main.app.App;
 import main.app.Configuration;
 import main.command.Command;
+import main.utils.Console;
 
 public abstract class State {
 
@@ -70,7 +72,13 @@ public abstract class State {
             current = current.getCallback();
         }
 
-        String adminStatus = Configuration.user.getAdmin() == 1 ? "admin" : "student";
+        Response<Integer> response = App.api.auth().isAdmin(Configuration.userId);
+        if (response.getStatus() != 200) {
+            Console.println("Couldn't load the user");
+            App.exit();
+        }
+        int admin = response.getData();
+        String adminStatus = admin == 1 ? "admin" : "student";
 
         return "(" + adminStatus + ") " + breadcrumbs;
     }

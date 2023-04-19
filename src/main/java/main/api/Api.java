@@ -3,10 +3,7 @@ package main.api;
 import java.sql.*;
 import java.util.Scanner;
 
-import main.api.routes.Authentification;
-import main.api.routes.Books;
-import main.api.routes.Orders;
-import main.api.routes.Users;
+import main.api.routes.*;
 import main.app.App;
 import main.app.Configuration;
 import main.utils.Console;
@@ -34,6 +31,10 @@ public class Api {
 
     public Authentification auth() {
         return new Authentification(connection);
+    }
+
+    public Profile profile() {
+        return new Profile(connection);
     }
 
     private void connect() {

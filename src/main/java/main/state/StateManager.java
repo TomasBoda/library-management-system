@@ -1,30 +1,43 @@
 package main.state;
 
+import main.api.Response;
+import main.app.App;
 import main.app.Configuration;
-import main.state.nodes.add.Add;
-import main.state.nodes.add.book.*;
-import main.state.nodes.add.order.*;
-import main.state.nodes.add.user.*;
-import main.state.nodes.delete.Delete;
-import main.state.nodes.delete.book.DeleteBook;
-import main.state.nodes.delete.book.DeleteBookCheckTitle;
-import main.state.nodes.delete.order.DeleteOrder;
-import main.state.nodes.delete.order.DeleteOrderCheckBook;
-import main.state.nodes.delete.order.DeleteOrderCheckUser;
-import main.state.nodes.delete.user.DeleteUser;
-import main.state.nodes.delete.user.DeleteUserCheckEmail;
-import main.state.nodes.edit.Edit;
-import main.state.nodes.edit.book.*;
-import main.state.nodes.edit.order.EditOrder;
-import main.state.nodes.edit.order.EditOrderCheckBook;
-import main.state.nodes.edit.order.EditOrderCheckUser;
-import main.state.nodes.edit.order.EditOrderExpirationDate;
-import main.state.nodes.edit.user.*;
-import main.state.nodes.Home;
-import main.state.nodes.list.List;
-import main.state.nodes.list.book.ListBook;
-import main.state.nodes.list.order.ListOrder;
-import main.state.nodes.list.user.ListUser;
+import main.state.nodes.admin.add.Add;
+import main.state.nodes.admin.add.book.*;
+import main.state.nodes.admin.add.order.*;
+import main.state.nodes.admin.add.user.*;
+import main.state.nodes.admin.delete.Delete;
+import main.state.nodes.admin.delete.book.DeleteBook;
+import main.state.nodes.admin.delete.book.DeleteBookCheckTitle;
+import main.state.nodes.admin.delete.order.DeleteOrder;
+import main.state.nodes.admin.delete.order.DeleteOrderCheckBook;
+import main.state.nodes.admin.delete.order.DeleteOrderCheckUser;
+import main.state.nodes.admin.delete.user.DeleteUser;
+import main.state.nodes.admin.delete.user.DeleteUserCheckEmail;
+import main.state.nodes.admin.edit.Edit;
+import main.state.nodes.admin.edit.book.*;
+import main.state.nodes.admin.edit.order.EditOrder;
+import main.state.nodes.admin.edit.order.EditOrderCheckBook;
+import main.state.nodes.admin.edit.order.EditOrderCheckUser;
+import main.state.nodes.admin.edit.order.EditOrderExpirationDate;
+import main.state.nodes.admin.edit.user.*;
+import main.state.nodes.admin.list.List;
+import main.state.nodes.admin.list.book.ListBook;
+import main.state.nodes.admin.list.order.ListOrder;
+import main.state.nodes.admin.list.user.ListUser;
+import main.state.nodes.student.edit.email.EditCheckEmail;
+import main.state.nodes.student.edit.email.EditEmail;
+import main.state.nodes.student.edit.name.EditCheckName;
+import main.state.nodes.student.edit.name.EditName;
+import main.state.nodes.student.edit.password.EditNewPassword;
+import main.state.nodes.student.edit.password.EditOldPassword;
+import main.state.nodes.student.edit.password.EditPassword;
+import main.state.nodes.student.edit.password.EditRepeatNewPassword;
+import main.state.nodes.student.show.Show;
+import main.state.nodes.student.show.order.ShowOrder;
+import main.state.nodes.student.show.profile.ShowProfile;
+import main.utils.Console;
 
 public class StateManager {
 
@@ -49,7 +62,16 @@ public class StateManager {
     }
 
     public void build() {
-        if (Configuration.user.getAdmin() == 0) {
+        Response<Integer> response = App.api.auth().isAdmin(Configuration.userId);
+
+        if (response.getStatus() != 200) {
+            Console.println("Couldn't load the user");
+            App.exit();
+        }
+
+        int admin = response.getData();
+
+        if (admin == 0) {
             state = buildStudentStates();
         } else {
             state = buildAdminStates();
@@ -57,11 +79,40 @@ public class StateManager {
     }
 
     private State buildStudentStates() {
-        return null;
+        State home = new main.state.nodes.student.Home("home", "What do you want to do");
+
+        State show = new Show("show", "What do you want to show", home);
+
+        State showProfile = new ShowProfile("profile", "You are about to show your profile, type anything to continue", show);
+        State showOrder = new ShowOrder("order", "You are about to show your orders, type anything to continue", show);
+
+        State edit = new Edit("edit", "What do you want to edit", home);
+
+        State editName = new EditName("name", "You are about to edit your profile name, type anything to continue", edit);
+        State editCheckName = new EditCheckName("check-name", "Enter your new profile name", editName);
+
+        State editEmail = new EditEmail("email", "You are about to edit your profile e-mail, type anything to continue, edit", edit);
+        State editCheckEmail = new EditCheckEmail("check-email", "Enter your new profile e-mail", editEmail);
+
+        State editPassword = new EditPassword("password", "You are about to edit your profile password, type anything to continue", edit);
+        State editOldPassword = new EditOldPassword("old-password", "Enter your current password", editPassword);
+        State editNewPassword = new EditNewPassword("new-password", "Enter your new password", editPassword);
+        State editRepeatNewPassword = new EditRepeatNewPassword("repeat-password", "Repeat your new password", editPassword);
+
+        show.setChildren(showProfile, showOrder);
+
+        editName.setChildren(editCheckName);
+        editEmail.setChildren(editCheckEmail);
+        editPassword.setChildren(editOldPassword, editNewPassword, editRepeatNewPassword);
+        edit.setChildren(editName, editEmail, editPassword);
+
+        home.setChildren(show, edit);
+
+        return home;
     }
 
     private State buildAdminStates() {
-        State home = new Home("home", "What do you want to do");
+        State home = new main.state.nodes.admin.Home("home", "What do you want to do");
 
         State add = new Add("add", "What do you want to add", home);
 

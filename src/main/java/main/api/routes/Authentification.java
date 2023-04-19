@@ -41,4 +41,22 @@ public class Authentification {
             return new Response(500, "MySQL Error");
         }
     }
+
+    public Response<Integer> isAdmin(String userId) {
+        String query = "SELECT admin FROM users WHERE id = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, userId);
+            ResultSet result = statement.executeQuery();
+
+            if (result.next()) {
+                int admin = result.getInt("admin");
+                return new Response(200, "User admin retrieved successfully", admin);
+            }
+
+            return new Response(404, "User was not found");
+        } catch (SQLException e) {
+            return new Response(500, "MySQL Error");
+        }
+    }
 }

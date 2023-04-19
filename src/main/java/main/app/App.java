@@ -24,7 +24,6 @@ public class App {
     public void start() {
         Console.println("Welcome to the Library Management System " + Configuration.VERSION);
 
-        mockLogin();
         login();
         manager.build();
 
@@ -70,8 +69,8 @@ public class App {
             Response<User> response = App.api.auth().login(email, password);
 
             if (response.getStatus() == 200) {
-                Configuration.user = response.getData();
-                Console.println("Logged in as " + Configuration.user.getName());
+                Configuration.userId = response.getData().getId();
+                Console.println("Logged in as " + response.getData().getName());
             } else {
                 Console.println("User credentials are incorrect, please try again");
             }
@@ -79,22 +78,19 @@ public class App {
     }
 
     public static boolean logged() {
-        return Configuration.user != null;
-    }
-
-    private void mockLogin() {
-        Configuration.user = new User("8c480d9fbf6f6be770f08537c601f98f", "Tomas Boda", "tomasboda@email.com", "2f21e282e693bfcdfaf97fb5e26d857f", 1);
+        return Configuration.userId != null;
     }
 
     private static Command[] initCommands() {
         return new Command[] {
                 new Command("back", state -> state.getCallback() == null ? state : state.getCallback()),
                 new Command("home", state -> App.manager.getRootState()),
-                new Command("exit", state -> { Console.println("Exiting the application"); App.exit(); return null; })
+                new Command("exit", state -> { App.exit(); return null; })
         };
     }
 
     public static void exit() {
+        Console.println("Exiting the application");
         System.exit(0);
     }
 }

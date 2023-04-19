@@ -4,7 +4,7 @@ import main.library.model.User;
 
 public class Configuration {
 
-    public static User user;
+    public static String userId;
 
     private static final int MAJOR_VERSION = 1;
     private static final int MINOR_VERSION = 0;
