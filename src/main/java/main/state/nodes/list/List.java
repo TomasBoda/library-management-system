@@ -12,8 +12,4 @@ public class List extends OptionState {
     public List(String command, String message, State callback) {
         super(command, message, callback);
     }
-
-    public List(String command, String message, State[] children) {
-        super(command, message, children);
-    }
 }

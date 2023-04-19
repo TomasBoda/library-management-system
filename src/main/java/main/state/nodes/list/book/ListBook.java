@@ -10,16 +10,8 @@ import main.utils.Console;
 
 public class ListBook extends ActionState {
 
-    public ListBook(String command, String message) {
-        super(command, message);
-    }
-
     public ListBook(String command, String message, State callback) {
         super(command, message, callback);
-    }
-
-    public ListBook(String command, String message, State[] children) {
-        super(command, message, children);
     }
 
     @Override
@@ -27,9 +19,10 @@ public class ListBook extends ActionState {
         Response<Book[]> response = App.api.books().getAll();
         Book[] books = response.getData();
 
+        Console.divider();
         Console.println("Total entries: " + books.length);
         for (Book book : books) {
-            Console.println(book.getId() + " | " + book.getTitle() + " | " + book.getDescription() + " | " + book.getAuthor());
+            Console.println(book.getStock() + " | " + book.getTitle() + " | " + book.getAuthor() + " | " + book.getDescription());
         }
     }
 }

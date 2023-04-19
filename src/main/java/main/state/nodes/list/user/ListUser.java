@@ -9,16 +9,8 @@ import main.utils.Console;
 
 public class ListUser extends ActionState {
 
-    public ListUser(String command, String message) {
-        super(command, message);
-    }
-
     public ListUser(String command, String message, State callback) {
         super(command, message, callback);
-    }
-
-    public ListUser(String command, String message, State[] children) {
-        super(command, message, children);
     }
 
     @Override
@@ -26,9 +18,10 @@ public class ListUser extends ActionState {
         Response<User[]> response = App.api.users().getAll();
         User[] users = response.getData();
 
+        Console.divider();
         Console.println("Total entries: " + users.length);
         for (User user : users) {
-            Console.println(user.getId() + " | " + user.getName() + " | " + user.getEmail());
+            Console.println(user.getAdmin() + " | " + user.getName() + " | " + user.getEmail());
         }
     }
 }

@@ -14,17 +14,17 @@ public abstract class InputState extends State {
         super(command, message, callback);
     }
 
-    public InputState(String command, String message, State[] children) {
-        super(command, message, children);
-    }
-
     @Override
     public State next(String command) {
-        return getCallback().next(command);
+        return ((ActionState) getCallback()).nextChild(command);
     }
 
     @Override
     public void ask() {
-        Console.print(getMessage() + ": ");
+        Console.print(getMessage() + ": " + getCustomAskValue());
+    }
+
+    public String getCustomAskValue() {
+        return "";
     }
 }

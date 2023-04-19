@@ -17,16 +17,21 @@ public abstract class ActionState extends State {
         super(command, message, callback);
     }
 
-    public ActionState(String command, String message, State[] children) {
-        super(command, message, children);
-    }
-
     public abstract void execute();
 
     @Override
     public State next(String command) {
+        if (currentStateIndex == 0) {
+            return nextChild(command);
+        }
+
+        return getChildren()[currentStateIndex].next(command);
+    }
+
+    public State nextChild(String command) {
         if (values == null) {
             execute();
+            currentStateIndex = 0;
             return getCallback();
         }
 
@@ -34,19 +39,27 @@ public abstract class ActionState extends State {
 
         if (isAtEnd()) {
             execute();
+            currentStateIndex = 0;
             return getCallback();
         }
 
         return getChildren()[currentStateIndex++];
     }
 
+    public State sameChild(String command) {
+        values[currentStateIndex] = command;
+        return getChildren()[currentStateIndex - 1];
+    }
+
     @Override
     public void ask() {
-        Console.println("-------------------------------");
         Console.println(getBreadcrumbs());
-        Console.println(getMessage());
-        App.manager.setState(next(""));
-        App.manager.getState().ask();
+        Console.print(getMessage() + ": ");
+
+        currentStateIndex = 0;
+
+        //App.manager.setState(next(""));
+        //App.manager.getState().ask();
     }
 
     @Override

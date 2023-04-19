@@ -2,25 +2,28 @@ package main.library.model;
 
 public class Book {
 
-    private int id;
+    private String id;
     private String title;
     private String description;
     private String author;
+    private int stock;
 
-    public Book(int id, String title, String description, String author) {
+    public Book(String id, String title, String description, String author, int stock) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.author = author;
+        this.stock = stock;
     }
 
-    public Book(String title, String description, String author) {
+    public Book(String title, String description, String author, int stock) {
         this.title = title;
         this.description = description;
         this.author = author;
+        this.stock = stock;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
@@ -34,5 +37,9 @@ public class Book {
 
     public String getAuthor() {
         return author;
+    }
+
+    public int getStock() {
+        return stock;
     }
 }

@@ -13,4 +13,8 @@ public class Console {
     public static void error(String message) {
         System.err.println(message);
     }
+
+    public static void divider() {
+        System.out.println("-----------------------------------------------------------------------");
+    }
 }

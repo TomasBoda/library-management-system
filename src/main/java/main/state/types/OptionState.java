@@ -12,9 +12,6 @@ public abstract class OptionState extends State {
     public OptionState(String command, String message, State callback) {
         super(command, message, callback);
     }
-    public OptionState(String command, String message, State[] children) {
-        super(command, message, children);
-    }
 
     @Override
     public State next(String command) {
@@ -30,7 +27,7 @@ public abstract class OptionState extends State {
 
     @Override
     public void ask() {
-        Console.println("-------------------------------");
+        Console.divider();
         Console.println(getBreadcrumbs());
         Console.print(getMessage() + " " + getOptions() + ": ");
     }

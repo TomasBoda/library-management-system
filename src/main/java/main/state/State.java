@@ -1,11 +1,6 @@
 package main.state;
 
-import main.app.App;
-import main.utils.Console;
-
-import java.io.IOException;
-import java.util.List;
-
+import main.app.Configuration;
 public abstract class State {
 
     private String command;
@@ -25,19 +20,9 @@ public abstract class State {
         this.callback = callback;
     }
 
-    public State(String command, String message, State[] children) {
-        this.command = command;
-        this.message = message;
-        this.children = children;
-    }
-
     public State process(String command) {
         if (command.equals(":back")) {
-            if (getCallback() == null) {
-                return this;
-            }
-
-            return getCallback();
+            return getCallback() == null ? this : getCallback();
         }
 
         return next(command);
@@ -55,11 +40,12 @@ public abstract class State {
         return message;
     }
 
-    public void setChildren(State... states) {
-        children = states;
-    }
     public State[] getChildren() {
         return children;
+    }
+
+    public void setChildren(State... states) {
+        children = states;
     }
 
     public State getCallback() {
@@ -79,6 +65,8 @@ public abstract class State {
             current = current.getCallback();
         }
 
-        return breadcrumbs;
+        String adminStatus = Configuration.user.getAdmin() == 1 ? "admin" : "student";
+
+        return "(" + adminStatus + ") " + breadcrumbs;
     }
 }

@@ -2,6 +2,7 @@ package main.api;
 
 import java.sql.*;
 
+import main.api.routes.Authentification;
 import main.api.routes.Books;
 import main.api.routes.Users;
 import main.app.App;
@@ -23,6 +24,10 @@ public class Api {
 
     public Books books() {
         return new Books(connection);
+    }
+
+    public Authentification auth() {
+        return new Authentification(connection);
     }
 
     private void connect() {
