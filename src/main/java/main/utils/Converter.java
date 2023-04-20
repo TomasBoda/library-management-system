@@ -7,6 +7,11 @@ import java.util.Calendar;
 
 public class Converter {
 
+    /**
+     * Converts a date string in form of D.M.YYYY to a java.sql.Date object
+     * @param date string representation of a date in form of D.M.YYYY
+     * @return java.sql.Date object of the given date string
+     */
     public static Date getSqlDate(String date) {
         String[] parts = date.split("\\.");
 
@@ -31,6 +36,11 @@ public class Converter {
         return new Date(calendar.getTime().getTime());
     }
 
+    /**
+     * Converts a java.sql.Date object to a date string in form of D.M.YYYY
+     * @param date java.sql.Date object
+     * @return date string in form of D.M.YYYY
+     */
     public static String sqlDateToString(Date date) {
         String[] parts = date.toString().split("\\-");
 

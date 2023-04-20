@@ -48,6 +48,10 @@ public class Api {
         return profile;
     }
 
+    /**
+     * Connects the system to the MySQL database
+     * Initiates a connection to the MySQL database
+     */
     private void connect() {
         checkDatabasePassword();
 
@@ -60,6 +64,9 @@ public class Api {
         }
     }
 
+    /**
+     * Checks whether the database password has been provided and if not, prompts the user to enter it into the console
+     */
     private void checkDatabasePassword() {
         if (Configuration.DATABASE_PASSWORD.equals("")) {
             Scanner scanner = new Scanner(System.in);

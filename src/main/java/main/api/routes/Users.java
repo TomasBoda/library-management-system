@@ -15,6 +15,11 @@ public class Users {
         this.connection = connection;
     }
 
+    /**
+     * Adds a new user to the database
+     * @param user user to be added to the database
+     * @return response of the API call
+     */
     public Response add(User user) {
         String query = "INSERT INTO users (id, name, email, password, admin) VALUES (?, ?, ?, ?, ?)";
 
@@ -38,6 +43,12 @@ public class Users {
         }
     }
 
+    /**
+     * Edits an existing user in the database
+     * @param userEmail e-mail of the user to be edited
+     * @param user user data to be set
+     * @return response of the API call
+     */
     public Response edit(String userEmail, User user) {
         String query = "UPDATE users SET name = ?, email = ?, password = ?, admin = ? WHERE email = ?";
 
@@ -61,6 +72,11 @@ public class Users {
         }
     }
 
+    /**
+     * Deletes an existing user from the database
+     * @param userEmail e-mail of the user to be deleted
+     * @return response of the API call
+     */
     public Response delete(String userEmail) {
         String query = "DELETE FROM users WHERE email = ?";
 
@@ -78,6 +94,11 @@ public class Users {
         }
     }
 
+    /**
+     * Retrieves an existing user from the database
+     * @param userEmail e-mail of the user to be retrieved
+     * @return response of the API call with the user data
+     */
     public Response<User> getByEmail(String userEmail) {
         String query = "SELECT * FROM users WHERE email = ?";
 
@@ -101,6 +122,10 @@ public class Users {
         }
     }
 
+    /**
+     * Retrieves all users from the database
+     * @return response of the API call with the array of retrieved users
+     */
     public Response<User[]> getAll() {
         String query = "SELECT * FROM users";
 

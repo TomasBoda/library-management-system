@@ -32,6 +32,10 @@ public abstract class OptionState extends State {
         Console.print(getMessage() + " " + getOptions() + ": ");
     }
 
+    /**
+     * Retrieves all child states of the given state
+     * @return a string of child states' commands
+     */
     private String getOptions() {
         String[] options = new String[getChildren().length];
 

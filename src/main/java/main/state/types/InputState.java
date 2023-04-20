@@ -23,6 +23,10 @@ public abstract class InputState extends State {
         Console.print(getMessage() + ": " + getCustomAskValue());
     }
 
+    /**
+     * Defines the custom value to be printed after the state's defined message
+     * @return custom additional message to be printed to the console
+     */
     public String getCustomAskValue() {
         return "";
     }

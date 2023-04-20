@@ -25,10 +25,23 @@ public abstract class State {
         this.callback = callback;
     }
 
+    /**
+     * Returns the next state of the state tree based on the input command
+     * @param command user input
+     * @return next state to go to
+     */
     public abstract State next(String command);
 
+    /**
+     * Prints a custom message to the console when the state has been reached
+     */
     public abstract void ask();
 
+    /**
+     * Processes the current user command and returns a new state to go to
+     * @param command user input
+     * @return next state to go to
+     */
     public State process(String command) {
         // process built-in commands
         for (Command cmd : App.commands) {
@@ -64,6 +77,10 @@ public abstract class State {
         callback = state;
     }
 
+    /**
+     * Generates a breadcrumbs string of the current state, so a path from the root state to the current state
+     * @return breadcrumbs string together with the user's admin status
+     */
     public String getBreadcrumbs() {
         String breadcrumbs = "";
         State current = this;

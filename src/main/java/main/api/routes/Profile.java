@@ -18,6 +18,10 @@ public class Profile {
         this.connection = connection;
     }
 
+    /**
+     * Retrieves the logged user's profile information
+     * @return response of the API call with the user's data
+     */
     public Response<User> getProfile() {
         String query = "SELECT * FROM users WHERE id = ?";
 
@@ -41,6 +45,11 @@ public class Profile {
         }
     }
 
+    /**
+     * Retrieves all orders of the logged user
+     * @param condition condition based on which the orders should be retrieved
+     * @return response of the API call with the array of retrieved orders
+     */
     public Response<OrderResult[]> getOrders(String condition) {
         String query = "SELECT books.title AS bookTitle, books.author as bookAuthor, orders.createdDate AS orderCreatedDate, orders.expirationDate AS orderExpirationDate FROM orders JOIN books ON books.id = orders.bookId WHERE orders.userId = ? AND " + condition + " ORDER BY orders.expirationDate DESC;";
 
@@ -65,6 +74,11 @@ public class Profile {
         }
     }
 
+    /**
+     * Edits the name of the logged user
+     * @param userName new name to be set
+     * @return response of the API call
+     */
     public Response editName(String userName) {
         String query = "UPDATE users SET name = ? WHERE id = ?";
 
@@ -85,6 +99,11 @@ public class Profile {
         }
     }
 
+    /**
+     * Edits the e-mail of the logged user
+     * @param userEmail new e-mail to be set
+     * @return response of the API call
+     */
     public Response editEmail(String userEmail) {
         String query = "UPDATE users SET email = ? WHERE id = ?";
 
@@ -105,6 +124,11 @@ public class Profile {
         }
     }
 
+    /**
+     * Edits the password of the logged user
+     * @param userPassword new password to be set
+     * @return response of the API call
+     */
     public Response editPassword(String userPassword) {
         String query = "UPDATE users SET password = ? WHERE id = ?";
 

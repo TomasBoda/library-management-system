@@ -25,6 +25,9 @@ public class App {
 
     public static String userId;
 
+    /**
+     * Starts the application and initiates user input processing
+     */
     public void start() {
         Console.println("Welcome to the Library Management System " + Configuration.VERSION);
 
@@ -41,6 +44,10 @@ public class App {
         run(executor);
     }
 
+    /**
+     * Reads the user input and processes it
+     * @param executor the executor which processes the user input
+     */
     private void run(CommandExecutor executor) {
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -57,6 +64,9 @@ public class App {
         }
     }
 
+    /**
+     * Initiates the login state which is repeatedly called until the user has successfully logged in
+     */
     private void login() {
         Scanner scanner = new Scanner(System.in);
 
@@ -78,10 +88,17 @@ public class App {
         }
     }
 
+    /**
+     * Checks whether the user is logged into the system or not
+     */
     public static boolean logged() {
         return App.userId != null;
     }
 
+    /**
+     * Initiates global built-in commands
+     * @return array of built-in commands
+     */
     private static Command[] initCommands() {
         return new Command[] {
                 new Command("back", state -> state.getCallback() == null ? state : state.getCallback()),
@@ -90,6 +107,9 @@ public class App {
         };
     }
 
+    /**
+     * Exits the application with an informative message
+     */
     public static void exit() {
         Console.println("Exiting the application");
         System.exit(0);

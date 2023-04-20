@@ -18,6 +18,11 @@ public class Books {
         this.connection = connection;
     }
 
+    /**
+     * Adds a new book to the database
+     * @param book book object to be added
+     * @return reponse of the API call
+     */
     public Response add(Book book) {
         String query = "INSERT INTO books (id, title, description, author, stock) VALUES (?, ?, ?, ?, ?)";
 
@@ -40,6 +45,12 @@ public class Books {
         }
     }
 
+    /**
+     * Edits a book's data in the database
+     * @param bookTitle title of the book to be edited
+     * @param book data of the book to be edited
+     * @return response of the API call
+     */
     public Response edit(String bookTitle, Book book) {
         String query = "UPDATE books SET title = ?, description = ?, author = ?, stock = ? WHERE title = ?";
 
@@ -63,6 +74,11 @@ public class Books {
         }
     }
 
+    /**
+     * Deletes a book from the database
+     * @param bookTitle title of the book to be deleted
+     * @return response of the API call
+     */
     public Response delete(String bookTitle) {
         String query = "DELETE FROM books WHERE title = ?";
 
@@ -81,6 +97,11 @@ public class Books {
         }
     }
 
+    /**
+     * Retrieve a book from the database
+     * @param bookTitle title of the book to be retrieved
+     * @return response of the API call with the retrieved book's data
+     */
     public Response<Book> getByTitle(String bookTitle) {
         String query = "SELECT * FROM books WHERE title = ?";
 
@@ -104,6 +125,10 @@ public class Books {
         }
     }
 
+    /**
+     * Retrieves all books from the database
+     * @return array of books from the database
+     */
     public Response<Book[]> getAll() {
         String query = "SELECT * FROM books";
 

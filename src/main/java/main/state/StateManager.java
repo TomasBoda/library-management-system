@@ -51,6 +51,10 @@ public class StateManager {
         this.state = state;
     }
 
+    /**
+     * Retrieves the root of the state tree, so a state which has no callback state defined
+     * @return root of the state tree
+     */
     public State getRootState() {
         State currentState = getState();
 
@@ -61,6 +65,12 @@ public class StateManager {
         return currentState;
     }
 
+    /**
+     * Generates a state tree data structure depending on the user's admin status
+     * If the user's admin status is 0, it generates a student state tree
+     * If the user's admin status is 1, it generates an admin state tree
+     * It saves the root of the state tree to the current state
+     */
     public void build() {
         Response<Integer> response = App.api.auth().isAdmin(App.userId);
 
@@ -78,6 +88,10 @@ public class StateManager {
         }
     }
 
+    /**
+     * Generates a state tree data structure for student interface
+     * @return root node of the state tree
+     */
     private State buildStudentStates() {
         State home = new main.state.nodes.student.Home("home", "What do you want to do");
 
@@ -111,6 +125,10 @@ public class StateManager {
         return home;
     }
 
+    /**
+     * Generates a state tree data structure for admin interface
+     * @return root node of the state tree
+     */
     private State buildAdminStates() {
         State home = new main.state.nodes.admin.Home("home", "What do you want to do");
 

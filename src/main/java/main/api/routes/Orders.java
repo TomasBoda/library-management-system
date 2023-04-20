@@ -15,6 +15,11 @@ public class Orders {
         this.connection = connection;
     }
 
+    /**
+     * Adds a new order to the database
+     * @param order order data to be added to the database
+     * @return response of the API call
+     */
     public Response add(Order order) {
         String query = "INSERT INTO orders (userId, bookId, createdDate, expirationDate) VALUES (?, ?, ?, ?)";
 
@@ -37,6 +42,13 @@ public class Orders {
         }
     }
 
+    /**
+     * Edits an order in the database
+     * @param userId ID of the order's user
+     * @param bookId ID of the order's book
+     * @param order order data to be edited
+     * @return response of the API call
+     */
     public Response edit(String userId, String bookId, Order order) {
         String query = "UPDATE orders SET expirationDate = ? WHERE userId = ? AND bookId = ?";
 
@@ -57,6 +69,12 @@ public class Orders {
         }
     }
 
+    /**
+     * Deletes an order from the database
+     * @param userId ID of the order's user
+     * @param bookId ID of the order's book
+     * @return response of the API call
+     */
     public Response delete(String userId, String bookId) {
         String query = "DELETE FROM orders WHERE userId = ? AND bookId = ?";
 
@@ -75,6 +93,12 @@ public class Orders {
         }
     }
 
+    /**
+     * Retrieves an order from the database
+     * @param userId ID of the order's user
+     * @param bookId ID of the order's book
+     * @return response of the API call with the order data
+     */
     public Response<Order> getById(String userId, String bookId) {
         String query = "SELECT * FROM orders WHERE userId = ? AND bookId = ?";
 
@@ -96,6 +120,11 @@ public class Orders {
         }
     }
 
+    /**
+     * Retrieves all orders from the database based on a condition
+     * @param condition condition based on which orders should be retrieved
+     * @return response of the API call with the array of retrieved orders
+     */
     public Response<OrderResult[]> getAll(String condition) {
         String query = "SELECT users.id AS userId, users.name AS userName, users.email AS userEmail, books.id AS bookId, books.title AS bookTitle, books.author as bookAuthor, orders.createdDate AS orderCreatedDate, orders.expirationDate AS orderExpirationDate FROM users JOIN orders ON users.id = orders.userId JOIN books ON books.id = orders.bookId " + condition + " GROUP BY users.id, books.id ORDER BY orders.expirationDate DESC;";
 

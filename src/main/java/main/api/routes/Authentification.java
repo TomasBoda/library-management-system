@@ -17,6 +17,12 @@ public class Authentification {
         this.connection = connection;
     }
 
+    /**
+     * Checks whether a user with the given e-mail and password exists and if yes, returns their data
+     * @param userEmail e-mail of the user to be logged in
+     * @param userPassword password of the user to be logged in
+     * @return response of the API call with the logged user data
+     */
     public Response<User> login(String userEmail, String userPassword) {
         String query = "SELECT * FROM users WHERE email = ? AND password = ?";
 
@@ -41,6 +47,11 @@ public class Authentification {
         }
     }
 
+    /**
+     * Checks whether the given user has the status of an administrator
+     * @param userId ID of the user to be checked for administrator status
+     * @return response of the API call with the admin status of the given user
+     */
     public Response<Integer> isAdmin(String userId) {
         String query = "SELECT admin FROM users WHERE id = ?";
 
