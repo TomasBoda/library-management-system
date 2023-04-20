@@ -49,12 +49,7 @@ public class Api {
     }
 
     private void connect() {
-        if (Configuration.DATABASE_PASSWORD.equals("")) {
-            Scanner scanner = new Scanner(System.in);
-            System.out.print("Enter database password: ");
-            String password = scanner.nextLine();
-            Configuration.DATABASE_PASSWORD = password;
-        }
+        checkDatabasePassword();
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -62,6 +57,15 @@ public class Api {
         } catch (Exception e) {
             Console.println("Cannot connect to the database, exiting...");
             App.exit();
+        }
+    }
+
+    private void checkDatabasePassword() {
+        if (Configuration.DATABASE_PASSWORD.equals("")) {
+            Scanner scanner = new Scanner(System.in);
+            System.out.print("Enter database password: ");
+            String password = scanner.nextLine();
+            Configuration.DATABASE_PASSWORD = password;
         }
     }
 }

@@ -95,3 +95,5 @@ There are several built-in commands the user can execute at any given point to e
 - `:exit` - this action exits the application
 
 Note that the built-in commands always start with the `:` prefix to distinguish them from other commands.
+
+by [Tomas Boda](https://github.com/TomasBoda)

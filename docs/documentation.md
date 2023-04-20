@@ -434,3 +434,5 @@ public class Generator {
     }
 }
 ```
+
+by [Tomas Boda](https://github.com/TomasBoda)
