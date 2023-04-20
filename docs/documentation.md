@@ -24,7 +24,7 @@ The application is an interactive console application which consists of many act
 Therefore, it requires a proper state management.
 For this purpose, I opted for a tree structure where each node represents one state and the user can move between the stages by moving from one node to another.
 
-The `StateManager` is a simple class, holding the current state and changing its value.
+The `StateManager` is a simple class, holding the current state and modifying its value.
 ```java
 public class StateManager {
 
@@ -39,8 +39,7 @@ public class StateManager {
     }
 }
 ```
-
-The main `App` components utilizes the `StateManager` by reading the user input and with each new input, it moves onto the next state in the `StateManager`.
+The main `App` component utilizes the `StateManager` by reading the user input and with each new input, it moves onto the next state in the `StateManager`.
 ```java
 public class App {
 
@@ -89,21 +88,17 @@ public abstract class State {
     public abstract void ask();
 }
 ```
-- `next` - return the next state to go to based on the user input command
+- `next` - returns the next state to go to based on the user input command
 - `ask` - echoes the state's message
 
-This `State` class servers as a state template and is used to implement the three main state types
-- `OptionState`
-- `ActionState`
-- `InputState`
+This `State` class serves as a state template and is used to implement the three main state types
+- [OptionState](#option-state)
+- [InputState](#input-state)
+- [ActionState](#action-state)
 
 ### Option State
 This state represents a transition state, from which the user can navigate to any of its child states.
-It supports no particular custom action, rather servers as a transition.
-
-```java
-public abstract class OptionState extends State {}
-```
+It supports no particular custom action, rather serves as a transition.
 
 It implements the `next` method in a way that it loops through its children and moves to a child with the corresponding user command.
 ```java
@@ -122,8 +117,7 @@ public abstract class OptionState extends State {
     }
 }
 ```
-
-It also implements the `ask` method by printing the current breadcrumbs, message and available options (child states).
+It also implements the `ask` method by printing the current breadcrumbs, message and available child states.
 ```java
 public abstract class OptionState extends State {
     
@@ -140,7 +134,7 @@ public abstract class OptionState extends State {
 Before understanding the `ActionState`, we first need to understand the `InputState`, since these two work hand in hand.
 
 The `InputState` does nothing in particular. It only takes the user input and stores it in the parent `ActionState`.
-The storing process of the `InputState` input is also implemented in the `ActionState`.
+The storing process of the `InputState` input value is implemented in the `ActionState`, rather than in `InputState`.
 Therefore, the `next` method of the `InputState` is implemented by calling the parent `ActionState` and triggering its `next` method.
 
 ```java
@@ -155,8 +149,7 @@ public abstract class InputState extends State {
 
 ### Action State
 This state represents a state where a custom action is executed after its successful walk through.
-
-Its children are of type `InputState`, whose inputs are stored in the `ActionState` and are processed after successful walk through.
+Its children are of type `InputState`, whose inputs are stored in the `ActionState` and are processed after successful retrieval of all user inputs.
 
 It implements the `next` method in the following way.
 ```java
@@ -201,7 +194,7 @@ Otherwise, it saves the child's value.
 If the current child is its last child, it also executes its action and returns to its parent state.
 Otherwise, it moves to the next `InputState` child by calling `return getChildren()[currentStateIndex++]`.
 
-In this way, the action state goes through all its `InputState` children, retrieves their values (from the user input) and performs a custom action with these values.
+In this way, the action state goes through all its `InputState` children, retrieves their values from the user input and performs a custom action with these values.
 Therefore, it implements the following abstract method `execute`.
 ```java
 public abstract class ActionState extends State {
@@ -209,9 +202,9 @@ public abstract class ActionState extends State {
     public abstract void execute();
 }
 ```
-This method is mainly used for adding new entries to the database, updating current databse entries or deleting database entries by some keys.
+This method is mainly used for adding new entries to the database, updating current database entries or deleting database entries by their keys or properties.
 
-With these three defined state types, we can build a state tree, which the user can navigate and perform corresponding actions.
+With these three state types defined, we can build a state tree, which the user can navigate and perform corresponding actions.
 
 ### Example - Adding a New Book to the Database
 Below is the implementation of adding a new book to the database using a parent `ActionState` and its `InputState` children.
@@ -224,6 +217,8 @@ public class AddBook extends ActionState {
         String description = getValues()[2];
         String author = getValues()[3];
         String stock = getValues()[4];
+        
+        // check format of the values if needed
 
         Response response = App.api.books().add(new Book(title, description, author, Integer.parseInt(stock)));
         Console.println(response.getMessage());
@@ -235,10 +230,9 @@ class AddBookDescription extends InputState {}
 class AddBookAuthor extends InputState {}
 class AddBookStock extends InputState {}
 ```
-
 The `InputState` children do not need any custom handling, since they are only reading the user input.
 
-These states are then added to the state tree in the `StateManager` in the following way.
+These states are then added to the state tree in the `StateManager` class in the following way.
 ```java
 public class StateManager {
     
@@ -269,7 +263,7 @@ public class StateManager {
 The `buildAdminStates` returns the root of the state tree.
 
 ## Api
-The `Api` class serves as a middleware for querying the database and returning obtained values.
+The `Api` class serves as an object for querying the database and returning the obtained values.
 
 It utilizes the `Response` class which represents a response of an `Api` call.
 
@@ -338,10 +332,10 @@ public class SomeClass {
 
 ## Library Model
 The `model` package contains classes representing the library model (tables).
-It contains the `User` model, `Book` model and the `Order` model.
+It contains the [User](#user-model) model, [Book](#book-model) model and the [Order](#order-model) model.
 
 ### User Model
-The `User` model represents a user stored in the database.
+The `User` model represents a **user** stored in the database.
 ```java
 public class User {
 
@@ -362,7 +356,7 @@ public class User {
 ```
 
 ### Book Model
-The `Book` model represents a book stored in the database.
+The `Book` model represents a **book** stored in the database.
 ```java
 public class Book {
 
@@ -383,7 +377,7 @@ public class Book {
 ```
 
 ### Order Model
-The `Order` model represents an order stored in the database.
+The `Order` model represents an **order** stored in the database.
 ```java
 public class Order {
 
@@ -403,10 +397,10 @@ public class Order {
 
 ## Hashing Using MD5
 The application implements a hashing module for generating IDs and safely storing hashed passwords in the database.
-It uses the `MD5` algorithm to generate fixed-length hashes of the given string.
+It uses the `MD5` generator to generate fixed-length hashes of the given string.
 
 ### Hash Generation
-Below is the implementation of the hashing algorithm, which uses the `MD5` algorithm.
+Below is the implementation of the hashing algorithm, which uses the `MD5` generator.
 ```java
 public class Generator {
 
