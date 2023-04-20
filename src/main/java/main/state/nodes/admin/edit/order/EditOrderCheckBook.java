@@ -22,9 +22,7 @@ public class EditOrderCheckBook extends InputState {
 
     @Override
     public State next(String command) {
-        String userEmail = ((ActionState) getCallback()).getValues()[1];
-        String bookTitle = command;
-
+        String userEmail = ((ActionState) getCallback()).getInputs()[1];
         Response<User> responseUser = App.api.users().getByEmail(userEmail);
 
         if (responseUser.getStatus() != 200) {
@@ -32,6 +30,7 @@ public class EditOrderCheckBook extends InputState {
             return getCallback().getCallback();
         }
 
+        String bookTitle = command;
         Response<Book> responseBook = App.api.books().getByTitle(bookTitle);
 
         if (responseBook.getStatus() != 200) {

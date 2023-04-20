@@ -17,12 +17,17 @@ public class EditBook extends ActionState {
 
     @Override
     public void execute() {
-        String newTitle = getValues()[2];
-        String newDescription = getValues()[3];
-        String newAuthor = getValues()[4];
-        String newStock = getValues()[5];
+        String newTitle = getInputs()[2];
+        String newDescription = getInputs()[3];
+        String newAuthor = getInputs()[4];
+        int newStock;
 
-        Response response = App.api.books().edit(book.getTitle(), new Book(newTitle, newDescription, newAuthor, Integer.parseInt(newStock)));
+        try { newStock = Integer.parseInt(getInputs()[5]); } catch (Exception e) {
+            Console.println("Stock must be a number");
+            return;
+        }
+
+        Response response = App.api.books().edit(book.getTitle(), new Book(newTitle, newDescription, newAuthor, newStock));
         Console.println(response.getMessage());
     }
 

@@ -25,7 +25,12 @@ public abstract class State {
         this.callback = callback;
     }
 
+    public abstract State next(String command);
+
+    public abstract void ask();
+
     public State process(String command) {
+        // process built-in commands
         for (Command cmd : App.commands) {
             if (cmd.getCommand().equals(command)) {
                 return cmd.getAction().getState(this);
@@ -34,10 +39,6 @@ public abstract class State {
 
         return next(command);
     }
-
-    public abstract State next(String command);
-
-    public abstract void ask();
 
     public String getCommand() {
         return command;
@@ -72,11 +73,12 @@ public abstract class State {
             current = current.getCallback();
         }
 
-        Response<Integer> response = App.api.auth().isAdmin(Configuration.userId);
+        Response<Integer> response = App.api.auth().isAdmin(App.userId);
         if (response.getStatus() != 200) {
             Console.println("Couldn't load the user");
             App.exit();
         }
+
         int admin = response.getData();
         String adminStatus = admin == 1 ? "admin" : "student";
 

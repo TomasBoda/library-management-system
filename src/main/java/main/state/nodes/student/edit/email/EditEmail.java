@@ -18,7 +18,7 @@ public class EditEmail extends ActionState {
 
     @Override
     public void execute() {
-        String email = getValues()[1];
+        String email = getInputs()[1];
 
         Response response = App.api.profile().editEmail(email);
         Console.println(response.getMessage());

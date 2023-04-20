@@ -14,14 +14,9 @@ public class DeleteUser extends ActionState {
 
     @Override
     public void execute() {
-        String email = getValues()[1];
+        String email = getInputs()[1];
 
         Response response = App.api.users().delete(email);
-
-        if (response.getStatus() == 200) {
-            Console.println("User successfully deleted");
-        } else {
-            Console.println(response.getMessage());
-        }
+        Console.println(response.getMessage());
     }
 }

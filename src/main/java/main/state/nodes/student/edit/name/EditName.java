@@ -8,17 +8,13 @@ import main.utils.Console;
 
 public class EditName extends ActionState {
 
-    public EditName(String command, String message) {
-        super(command, message);
-    }
-
     public EditName(String command, String message, State callback) {
         super(command, message, callback);
     }
 
     @Override
     public void execute() {
-        String name = getValues()[1];
+        String name = getInputs()[1];
 
         Response response = App.api.profile().editName(name);
         Console.println(response.getMessage());

@@ -23,6 +23,8 @@ public class App {
     public static final StateManager manager = new StateManager();
     public static final Command[] commands = initCommands();
 
+    public static String userId;
+
     public void start() {
         Console.println("Welcome to the Library Management System " + Configuration.VERSION);
 
@@ -68,7 +70,7 @@ public class App {
             Response<User> response = App.api.auth().login(email, password);
 
             if (response.getStatus() == 200) {
-                Configuration.userId = response.getData().getId();
+                App.userId = response.getData().getId();
                 Console.println("Logged in as " + response.getData().getName());
             } else {
                 Console.println("User credentials are incorrect, please try again");
@@ -77,7 +79,7 @@ public class App {
     }
 
     public static boolean logged() {
-        return Configuration.userId != null;
+        return App.userId != null;
     }
 
     private static Command[] initCommands() {

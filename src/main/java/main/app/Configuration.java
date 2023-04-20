@@ -2,9 +2,7 @@ package main.app;
 
 public class Configuration {
 
-    public static String userId;
-
-    private static final int MAJOR_VERSION = 1;
+    private static final int MAJOR_VERSION = 2;
     private static final int MINOR_VERSION = 0;
     private static final int BUGFIX_VERSION = 0;
 

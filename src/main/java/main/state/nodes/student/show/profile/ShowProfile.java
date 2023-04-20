@@ -9,10 +9,6 @@ import main.utils.Console;
 
 public class ShowProfile extends ActionState {
 
-    public ShowProfile(String command, String message) {
-        super(command, message);
-    }
-
     public ShowProfile(String command, String message, State callback) {
         super(command, message, callback);
     }

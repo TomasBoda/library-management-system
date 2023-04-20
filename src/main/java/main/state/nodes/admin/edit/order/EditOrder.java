@@ -27,9 +27,14 @@ public class EditOrder extends ActionState {
         String userId = getOrder().getUserId();
         String bookId = getOrder().getBookId();
         Date createdDate = getOrder().getCreatedDate();
-        String newExpirationDate = getValues()[3];
+        Date newExpirationDate;
 
-        Response response = App.api.orders().edit(userId, bookId, new Order(userId, bookId, createdDate, Converter.getSqlDate(newExpirationDate)));
+        try { newExpirationDate = Converter.getSqlDate(getInputs()[3]); } catch (Exception e) {
+            Console.println("Date has incorrect format");
+            return;
+        }
+
+        Response response = App.api.orders().edit(userId, bookId, new Order(userId, bookId, createdDate, newExpirationDate));
         Console.println(response.getMessage());
     }
 

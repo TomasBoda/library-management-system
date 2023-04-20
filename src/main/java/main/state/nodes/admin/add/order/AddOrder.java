@@ -8,6 +8,8 @@ import main.state.types.ActionState;
 import main.utils.Console;
 import main.utils.Converter;
 
+import java.sql.Date;
+
 public class AddOrder extends ActionState {
 
     public AddOrder(String command, String message) {
@@ -20,12 +22,20 @@ public class AddOrder extends ActionState {
 
     @Override
     public void execute() {
-        String userId = getValues()[1];
-        String bookId = getValues()[2];
-        String createdDate = getValues()[3];
-        String expirationDate = getValues()[4];
+        String userId = getInputs()[1];
+        String bookId = getInputs()[2];
+        Date createdDate;
+        Date expirationDate;
 
-        Response response = App.api.orders().add(new Order(userId, bookId, Converter.getSqlDate(createdDate), Converter.getSqlDate(expirationDate)));
+        try {
+            createdDate = Converter.getSqlDate(getInputs()[3]);
+            expirationDate = Converter.getSqlDate(getInputs()[3]);
+        } catch (Exception e) {
+            Console.println("Dates have incorrect format");
+            return;
+        }
+
+        Response response = App.api.orders().add(new Order(userId, bookId, createdDate, expirationDate));
         Console.println(response.getMessage());
     }
 }

@@ -13,7 +13,7 @@ public class DeleteBook extends ActionState {
 
     @Override
     public void execute() {
-        String title = getValues()[1];
+        String title = getInputs()[1];
 
         Response response = App.api.books().delete(title);
 

@@ -10,10 +10,6 @@ import main.utils.Converter;
 
 public class ShowOrder extends ActionState {
 
-    public ShowOrder(String command, String message) {
-        super(command, message);
-    }
-
     public ShowOrder(String command, String message, State callback) {
         super(command, message, callback);
     }

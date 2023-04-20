@@ -92,7 +92,7 @@ public class Users {
                 String password = result.getString("password");
                 int admin = result.getInt("admin");
 
-                return new Response<User>(200, "User exists", new User(id, name, email, password, admin));
+                return new Response(200, "User exists", new User(id, name, email, password, admin));
             }
 
             return new Response(500, "User does not exist");
@@ -117,8 +117,7 @@ public class Users {
                 users.add(new User(id, name, email, password, admin));
             }
 
-            User[] userArray = users.toArray(User[]::new);
-            return new Response(200, "Users loaded successfully", userArray);
+            return new Response(200, "Users loaded successfully", users.toArray(User[]::new));
         } catch (SQLException e) {
             return new Response(500, "MySQL Error");
         }

@@ -15,12 +15,22 @@ public class AddUser extends ActionState {
 
     @Override
     public void execute() {
-        String name = getValues()[1];
-        String email = getValues()[2];
-        String password = getValues()[3];
-        String admin = getValues()[4];
+        String name = getInputs()[1];
+        String email = getInputs()[2];
+        String password = getInputs()[3];
+        int admin;
 
-        Response response = App.api.users().add(new User(name, email, password, Integer.parseInt(admin)));
+        try { admin = Integer.parseInt(getInputs()[4]); } catch (Exception e) {
+            Console.println("Admin must be a number");
+            return;
+        }
+
+        if (admin != 0 && admin != 1) {
+            Console.println("Admin must be either 0 or 1");
+            return;
+        }
+
+        Response response = App.api.users().add(new User(name, email, password, admin));
         Console.println(response.getMessage());
     }
 }

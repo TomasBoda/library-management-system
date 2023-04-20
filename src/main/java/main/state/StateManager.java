@@ -62,7 +62,7 @@ public class StateManager {
     }
 
     public void build() {
-        Response<Integer> response = App.api.auth().isAdmin(Configuration.userId);
+        Response<Integer> response = App.api.auth().isAdmin(App.userId);
 
         if (response.getStatus() != 200) {
             Console.println("Couldn't load the user");

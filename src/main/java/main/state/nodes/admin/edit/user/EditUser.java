@@ -17,12 +17,22 @@ public class EditUser extends ActionState {
 
     @Override
     public void execute() {
-        String newName = getValues()[2];
-        String newEmail = getValues()[3];
-        String newPassword = getValues()[4];
-        String newAdmin = getValues()[5];
+        String newName = getInputs()[2];
+        String newEmail = getInputs()[3];
+        String newPassword = getInputs()[4];
+        int newAdmin;
 
-        Response response = App.api.users().edit(user.getEmail(), new User(newName, newEmail, newPassword, Integer.parseInt(newAdmin)));
+        try { newAdmin = Integer.parseInt(getInputs()[5]); } catch (Exception e) {
+            Console.println("Admin must be a number");
+            return;
+        }
+
+        if (newAdmin != 0 && newAdmin != 1) {
+            Console.println("Admin must be either 0 or 1");
+            return;
+        }
+
+        Response response = App.api.users().edit(user.getEmail(), new User(newName, newEmail, newPassword, newAdmin));
         Console.println(response.getMessage());
     }
 

@@ -15,12 +15,17 @@ public class AddBook extends ActionState {
 
     @Override
     public void execute() {
-        String title = getValues()[1];
-        String description = getValues()[2];
-        String author = getValues()[3];
-        String stock = getValues()[4];
+        String title = getInputs()[1];
+        String description = getInputs()[2];
+        String author = getInputs()[3];
+        int stock;
 
-        Response response = App.api.books().add(new Book(title, description, author, Integer.parseInt(stock)));
+        try { stock = Integer.parseInt(getInputs()[4]); } catch (Exception e) {
+            Console.println("Stock must be a number");
+            return;
+        }
+
+        Response response = App.api.books().add(new Book(title, description, author, stock));
         Console.println(response.getMessage());
     }
 }

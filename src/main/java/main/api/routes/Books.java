@@ -68,6 +68,7 @@ public class Books {
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, bookTitle);
+
             int rowsAffected = statement.executeUpdate();
 
             if (rowsAffected == 0) {
@@ -94,7 +95,7 @@ public class Books {
                 String author = result.getString("author");
                 int stock = result.getInt("stock");
 
-                return new Response<Book>(200, "Book exists", new Book(id, title, description, author, stock));
+                return new Response(200, "Book exists", new Book(id, title, description, author, stock));
             }
 
             return new Response(500, "User does not exist");
@@ -119,8 +120,7 @@ public class Books {
                 books.add(new Book(id, title, description, author, stock));
             }
 
-            Book[] bookArray = books.toArray(Book[]::new);
-            return new Response(200, "Books loaded successfully", bookArray);
+            return new Response(200, "Books loaded successfully", books.toArray(Book[]::new));
         } catch (SQLException e) {
             return new Response(500, "MySQL Error");
         }

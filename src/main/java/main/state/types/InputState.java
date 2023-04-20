@@ -1,6 +1,5 @@
 package main.state.types;
 
-import main.app.App;
 import main.state.State;
 import main.utils.Console;
 

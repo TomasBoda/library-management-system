@@ -10,10 +10,6 @@ import main.utils.Console;
 
 public class AddOrderUser extends InputState {
 
-    public AddOrderUser(String command, String message) {
-        super(command, message);
-    }
-
     public AddOrderUser(String command, String message, State callback) {
         super(command, message, callback);
     }

@@ -1,6 +1,7 @@
 package main.api.routes;
 
 import main.api.Response;
+import main.app.App;
 import main.app.Configuration;
 import main.model.User;
 import main.state.nodes.student.model.OrderResult;
@@ -21,8 +22,7 @@ public class Profile {
         String query = "SELECT * FROM users WHERE id = ?";
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setString(1, Configuration.userId);
-
+            statement.setString(1, App.userId);
             ResultSet result = statement.executeQuery();
 
             if (result.next()) {
@@ -32,7 +32,7 @@ public class Profile {
                 String password = result.getString("password");
                 int admin = result.getInt("admin");
 
-                return new Response<User>(200, "User profile loaded successfully", new User(id, name, email, password, admin));
+                return new Response(200, "User profile loaded successfully", new User(id, name, email, password, admin));
             }
 
             return new Response(500, "User profile couldn't be loaded");
@@ -45,7 +45,7 @@ public class Profile {
         String query = "SELECT books.title AS bookTitle, books.author as bookAuthor, orders.createdDate AS orderCreatedDate, orders.expirationDate AS orderExpirationDate FROM orders JOIN books ON books.id = orders.bookId WHERE orders.userId = ? AND " + condition + " ORDER BY orders.expirationDate DESC;";
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setString(1, Configuration.userId);
+            statement.setString(1, App.userId);
 
             ResultSet result = statement.executeQuery();
             ArrayList<OrderResult> orders = new ArrayList<>();
@@ -59,8 +59,7 @@ public class Profile {
                 orders.add(new OrderResult(bookTitle, bookAuthor, orderCreatedDate, orderExpirationDate));
             }
 
-            OrderResult[] ordersArray = orders.toArray(OrderResult[]::new);
-            return new Response(200, "Orders loaded successfully", ordersArray);
+            return new Response(200, "Orders loaded successfully", orders.toArray(OrderResult[]::new));
         } catch (SQLException e) {
             return new Response(500, "MySQL Error");
         }
@@ -71,7 +70,7 @@ public class Profile {
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, userName);
-            statement.setString(2, Configuration.userId);
+            statement.setString(2, App.userId);
 
             int rowsUpdated = statement.executeUpdate();
 
@@ -91,15 +90,15 @@ public class Profile {
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, userEmail);
-            statement.setString(2, Configuration.userId);
+            statement.setString(2, App.userId);
 
             int rowsUpdated = statement.executeUpdate();
 
             if (rowsUpdated > 0) {
-                return new Response(200, "User email successfully");
+                return new Response(200, "User e-mail successfully");
             }
 
-            return new Response(500, "User email couldn't be updated");
+            return new Response(500, "User e-mail couldn't be updated");
         } catch (SQLException e) {
             e.printStackTrace();
             return new Response(500, "MySQL Error");
@@ -111,7 +110,7 @@ public class Profile {
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, Generator.getHash(userPassword));
-            statement.setString(2, Configuration.userId);
+            statement.setString(2, App.userId);
 
             int rowsUpdated = statement.executeUpdate();
 

@@ -10,10 +10,6 @@ import main.utils.Generator;
 
 public class EditPassword extends ActionState {
 
-    public EditPassword(String command, String message) {
-        super(command, message);
-    }
-
     public EditPassword(String command, String message, State callback) {
         super(command, message, callback);
     }
@@ -29,9 +25,9 @@ public class EditPassword extends ActionState {
 
         String password = responseUser.getData().getPassword();
 
-        String oldPassword = getValues()[1];
-        String newPassword = getValues()[2];
-        String repeatNewPassword = getValues()[3];
+        String oldPassword = getInputs()[1];
+        String newPassword = getInputs()[2];
+        String repeatNewPassword = getInputs()[3];
 
         if (!password.equals(Generator.getHash(oldPassword))) {
             Console.println("Old password does not match your current password");

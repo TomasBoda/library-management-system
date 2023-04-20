@@ -87,7 +87,7 @@ public class Orders {
                 Date createdDate = result.getDate("createdDate");
                 Date expirationDate = result.getDate("expirationDate");
 
-                return new Response<Order>(200, "Order exists", new Order(userId, bookId, createdDate, expirationDate));
+                return new Response(200, "Order exists", new Order(userId, bookId, createdDate, expirationDate));
             }
 
             return new Response(500, "Order does not exist");
@@ -116,8 +116,7 @@ public class Orders {
                 orders.add(new OrderResult(userId, userName, userEmail, bookId, bookTitle, bookAuthor, orderCreatedDate, orderExpirationDate));
             }
 
-            OrderResult[] ordersArray = orders.toArray(OrderResult[]::new);
-            return new Response(200, "Orders loaded successfully", ordersArray);
+            return new Response(200, "Orders loaded successfully", orders.toArray(OrderResult[]::new));
         } catch (SQLException e) {
             return new Response(500, e.getMessage());
         }
